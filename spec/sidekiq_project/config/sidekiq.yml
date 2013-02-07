@@ -1,0 +1,6 @@
+---
+:verbose: false
+:concurrency: 7
+:queues:
+  - [q1, 1]
+  - [q2, 1]

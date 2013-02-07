@@ -8,7 +8,7 @@ module Sidekiq
                   :logfile, :require,
                   :daemon, :timeout,
                   :verbose, :concurrency,
-                  :queue
+                  :queue, :project_root
 
 
     ##
@@ -17,12 +17,19 @@ module Sidekiq
     # :config, :pidfile, :logfile, :require, :timeout, :verbose, :queue,
     # :concurrency, :daemon
     def initialize(options = {})
-      project_root = defined?(Rails) ? Rails.root.to_s : options[:require]
+
+      if defined?(Rails)
+        require = Rails.root.to_s
+        project_root = require
+      else
+        require = options[:require]
+        project_root = File.dirname(require)
+      end
 
       default_options = {:config => "#{project_root}/config/sidekiq.yml",
                          :pidfile => "#{project_root}/tmp/pids/sidekiq.pid",
                          :logfile => "#{project_root}/log/sidekiq.log",
-                         :require => "#{project_root}",
+                         :require => "#{require}",
                          :timeout => 10,
                          :verbose => false,
                          :queue => nil,
@@ -32,17 +39,18 @@ module Sidekiq
       options.each { |k, v| send("#{k}=", v) }
     end
 
-    def start
+    def start_workers
       sidekiq = Sidekiq::CLI.instance
 
-      args = ["-C", @config,
-              "-P", @pidfile,
-              "-L", @logfile,
-              "-t", @timeout,
-              "-c", @concurrency,
-              "-q", @queue,
-              "-r", @require]
+      args = []
 
+      ["-r", @require].each { |arg| args << arg } unless @require.nil?
+      ["-t", @timeout.to_s].each { |arg| args << arg } unless @timeout.nil?
+      ["-L", @logfile].each { |arg| args << arg } unless @logfile.nil?
+      ["-C", @config].each { |arg| args << arg } unless @config.nil?
+      ["-P", @pidfile].each { |arg| args << arg } unless @pidfile.nil?
+      ["-q", @queue].each { |arg| args << arg } unless @queue.nil?
+      ["-c", @concurrency].each { |arg| args << arg } unless @concurrency.nil?
       args << "-d" if @daemon == true
       args << "-v" if @verbose == true
 
@@ -51,7 +59,7 @@ module Sidekiq
       sidekiq.run
     end
 
-    def stop
+    def stop_workers
       system "if [ -f #{@pidfile} ]; then bundle exec sidekiqctl stop #{@pidfile}; fi"
     end
 
