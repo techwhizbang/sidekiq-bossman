@@ -32,12 +32,13 @@ Or install it yourself as:
 ## Usage
 
 Start your Sidekiq workers
+
     Sidekiq::Bossman.new.start
 
 Stop your Sidekiq workers
+
     Sidekiq::Bossman.new.stop
 
-Th
 
 ## Contributing
 
