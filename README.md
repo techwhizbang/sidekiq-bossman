@@ -39,6 +39,18 @@ Stop your Sidekiq workers
 
     Sidekiq::Bossman.new.stop
 
+When initializing Sidekiq::Bossman it can take an options Hash, these are the defaults:
+
+    {:config => "#{project_root}/config/sidekiq.yml",
+     :pidfile => "#{project_root}/tmp/pids/sidekiq.pid",
+     :logfile => "#{project_root}/log/sidekiq.log",
+     :require => "#{project_root}",
+     :timeout => 10,
+     :verbose => false,
+     :queue => nil,
+     :concurrency => nil,
+     :daemon => true}
+
 
 ## Contributing
 
