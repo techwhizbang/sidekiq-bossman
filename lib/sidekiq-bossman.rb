@@ -16,20 +16,12 @@ module Sidekiq
     # of Sidekiq this gem depends upon:
     # :config, :pidfile, :logfile, :require, :timeout, :verbose, :queue,
     # :concurrency, :daemon
-    def initialize(options = {})
-
-      if defined?(Rails)
-        require_path = Rails.root.to_s
-        project_root = require_path
-      else
-        require_path = options[:require]
-        project_root = File.dirname(require_path)
-      end
+    def initialize(project_root, options = {})
 
       default_options = {:config => "#{project_root}/config/sidekiq.yml",
                          :pidfile => "#{project_root}/tmp/pids/sidekiq.pid",
                          :logfile => "#{project_root}/log/sidekiq.log",
-                         :require => "#{require_path}",
+                         :require => "#{project_root}",
                          :timeout => 10,
                          :verbose => false,
                          :queue => nil,

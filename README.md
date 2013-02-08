@@ -33,11 +33,11 @@ Or install it yourself as:
 
 Start your Sidekiq workers
 
-    Sidekiq::Bossman.new.start_workers
+    Sidekiq::Bossman.new(Rails.root.to_s).start_workers
 
 Stop your Sidekiq workers
 
-    Sidekiq::Bossman.new.stop_workers
+    Sidekiq::Bossman.new(Rails.root.to_s).stop_workers
 
 When initializing Sidekiq::Bossman it can take an options Hash, these are the defaults:
 
