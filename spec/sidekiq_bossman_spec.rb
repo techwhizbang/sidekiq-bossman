@@ -6,6 +6,7 @@ describe Sidekiq::Bossman do
   before do
     @sidekiq_bossman = Sidekiq::Bossman.new(File.expand_path(File.dirname(__FILE__) + "/sidekiq_project"),
                                             :require => "#{File.expand_path(File.dirname(__FILE__) + "/sidekiq_project")}/boot.rb",
+                                            :environment => "test",
                                             :daemon => true)
   end
 

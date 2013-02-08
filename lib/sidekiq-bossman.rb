@@ -8,7 +8,7 @@ module Sidekiq
                   :logfile, :require,
                   :daemon, :timeout,
                   :verbose, :concurrency,
-                  :queue, :project_root
+                  :queue, :environment
 
 
     ##
@@ -22,6 +22,7 @@ module Sidekiq
                          :pidfile => "#{project_root}/tmp/pids/sidekiq.pid",
                          :logfile => "#{project_root}/log/sidekiq.log",
                          :require => "#{project_root}",
+                         :environment => "development",
                          :timeout => 10,
                          :verbose => false,
                          :queue => nil,
@@ -43,6 +44,7 @@ module Sidekiq
       ["-P", @pidfile].each { |arg| args << arg } unless @pidfile.nil?
       ["-q", @queue].each { |arg| args << arg } unless @queue.nil?
       ["-c", @concurrency].each { |arg| args << arg } unless @concurrency.nil?
+      ["-e", @environment].each { |arg| args << arg } unless @environment.nil?
       args << "-d" if @daemon == true
       args << "-v" if @verbose == true
 
