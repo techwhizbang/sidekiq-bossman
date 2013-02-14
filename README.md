@@ -1,5 +1,7 @@
 # Sidekiq::Bossman
 
+[![Build Status](https://travis-ci.org/techwhizbang/sidekiq-bossman.png)](https://travis-ci.org/techwhizbang/sidekiq-bossman)
+
 The goal of Sidekiq::Bossman is to provide an easy programmatic approach
 to starting and stopping Sidekiq workers. Everything in Sidekiq::Bossman
 is nothing more than an idiomatic Ruby abstraction atop what already exists in Sidekiq.
