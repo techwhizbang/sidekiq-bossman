@@ -7,8 +7,7 @@ describe Sidekiq::Bossman do
     FileUtils.touch(File.dirname(__FILE__) + "/sidekiq_project/log/sidekiq.log")
     @sidekiq_bossman = Sidekiq::Bossman.new(File.expand_path(File.dirname(__FILE__) + "/sidekiq_project"),
                                             :require => "#{File.expand_path(File.dirname(__FILE__) + "/sidekiq_project")}/boot.rb",
-                                            :environment => "test",
-                                            :daemon => true)
+                                            :environment => "test")
   end
 
   after do
