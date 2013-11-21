@@ -6,7 +6,7 @@ module Sidekiq
     attr_accessor :config, :pidfile,
                   :logfile, :require,
                   :timeout, :verbose, :concurrency,
-                  :queue, :environment
+                  :queue, :queues, :environment
 
 
     ##
@@ -24,6 +24,7 @@ module Sidekiq
                          :timeout => 10,
                          :verbose => false,
                          :queue => nil,
+                         :queues => [],
                          :concurrency => nil}
       options = default_options.merge(options)
       options.each { |k, v| send("#{k}=", v) }
@@ -38,6 +39,7 @@ module Sidekiq
       start_cmd << " -r #{@require}" unless @require.nil?
       start_cmd << " -C #{@config}" unless @config.nil?
       start_cmd << " -q #{@queue}" unless @queue.nil?
+      @queues.each { |queue| start_cmd << " -q #{queue}" }
       start_cmd << " -c #{@concurrency}" unless @concurrency.nil?
       start_cmd << " >> #{@logfile} 2>&1 &"
       system start_cmd
