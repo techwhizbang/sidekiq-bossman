@@ -1,4 +1,4 @@
-Copyright (c) 2013 Nick Zalabak
+Copyright (c) 2014 Nick Zalabak
 
 sidekiq-bossman is an Open Source project licensed under the terms of
 the LGPLv3 license (same as sidekiq).  Please see <http://www.gnu.org/licenses/lgpl-3.0.html>
