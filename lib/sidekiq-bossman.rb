@@ -3,7 +3,7 @@ require 'rubygems'
 module Sidekiq
   class Bossman
 
-    attr_accessor :config, :pidfile,
+    attr_accessor :config, :daemon, :pidfile,
                   :logfile, :require,
                   :timeout, :verbose, :concurrency,
                   :queue, :queues, :environment
@@ -25,6 +25,7 @@ module Sidekiq
                          :verbose => false,
                          :queue => nil,
                          :queues => [],
+                         :daemon => false,
                          :concurrency => nil}
       options = default_options.merge(options)
       options.each { |k, v| send("#{k}=", v) }
@@ -36,6 +37,7 @@ module Sidekiq
     def start_workers
       start_cmd = "nohup bundle exec sidekiq -e #{@environment} -t #{@timeout} -P #{@pidfile}"
       start_cmd << " -v" if @verbose == true
+      start_cmd << " -d" if @daemon == true
       start_cmd << " -r #{@require}" unless @require.nil?
       start_cmd << " -C #{@config}" unless @config.nil?
       start_cmd << " -q #{@queue}" unless @queue.nil?
