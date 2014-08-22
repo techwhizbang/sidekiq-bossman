@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
-  gem.add_dependency(%q<sidekiq>, [">= 2.12.0", "< 2.18.0"])
+  gem.add_dependency(%q<sidekiq>, [">= 2.12.0"])
   gem.add_development_dependency(%q<rspec>, ["~> 2.12.0"])
   gem.add_development_dependency(%q<rake>, ["~> 10.0.3"])
 end
